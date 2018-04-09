@@ -14,10 +14,10 @@ interface HttpHandler
 
 class CurlHandler implements HttpHandler
 {
-	protected $handle = null;
-	protected $url = "";
+    protected $handle = null;
+    protected $url = "";
 
-	public function __construct($url) {
+    public function __construct($url) {
       $this->handle = curl_init($url);
       $this->url = $url;
     }
