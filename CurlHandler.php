@@ -2,7 +2,7 @@
 /* 
     Use interface so PHPUnit can use getMock in unit testing without relying on external API
 */
-interface HttpHandler
+interface HttpRequest
 {
     public function setOption($option, $value);
     public function setOptions($options);
@@ -12,7 +12,7 @@ interface HttpHandler
     public function close();
 }
 
-class CurlHandler implements HttpHandler
+class CurlHandler implements HttpRequest
 {
     protected $handle = null;
     protected $url = "";
@@ -51,7 +51,7 @@ class CurlHandler implements HttpHandler
     
 }
 
-class CurlMultiHandler extends CurlHandler implements HttpHandler
+class CurlMultiHandler extends CurlHandler implements HttpRequest
 {
     protected $mhandle = null;
     private $handles = array();
@@ -65,9 +65,7 @@ class CurlMultiHandler extends CurlHandler implements HttpHandler
       {
         curl_setopt($ch['handle'], $option, $value);
         if($option == CURLOPT_URL) { $ch['url'] = $value; }
-            
       }
-      unset($ch);
     }
     
     public function setMultiOption($option, $value) {
@@ -80,7 +78,6 @@ class CurlMultiHandler extends CurlHandler implements HttpHandler
         curl_setopt_array($ch['handle'], $options);
         if(array_key_exists(CURLOPT_URL, $options)) { $ch['url'] = $options[CURLOPT_URL]; }
       }
-      unset($ch);
     }
 
     public function execute() {
