@@ -7,9 +7,9 @@ interface HttpHandler
     public function setOption($option, $value);
     public function setOptions($options);
     public function execute();
-	public function getInfo($option); // Not currently implemented for CurlMultiHandler
-	public function getError();
-	public function close();
+    public function getInfo($option); // Not currently implemented for CurlMultiHandler 
+    public function getError();
+    public function close();
 }
 
 class CurlHandler implements HttpHandler
