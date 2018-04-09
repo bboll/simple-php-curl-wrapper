@@ -1,7 +1,5 @@
 <?php
-/* 
-    Use interface so PHPUnit can use getMock in unit testing without relying on external API
-*/
+
 interface HttpRequest
 {
     public function setOption($option, $value);
@@ -97,14 +95,11 @@ class CurlMultiHandler extends CurlHandler implements HttpRequest
         
       return $responseArr;
     }
-    
-    /*  No equivalent function curl_getinfo for curl_multi. 
-        Not sure how to implement or why it might be useful, yet */
+
     public function getInfo($option) {
         
     }
 
-    //TODO: Implement user-defined errorhandling class
     public function getError() {
       $response = "";
       $errors = array();
@@ -128,7 +123,6 @@ class CurlMultiHandler extends CurlHandler implements HttpRequest
           //Lookup index of corresponding handle object from the handle error
           $index = array_search($key, $CurlHandlerObj);
 
-          //TODO: Set a flag to allow showing of non-errors as well
           //Construct error response
           if($index != false && $errorObj['result']!=0) { 
           $tmpArr['error'] = curl_strerror($value["result"]);
@@ -143,7 +137,6 @@ class CurlMultiHandler extends CurlHandler implements HttpRequest
       return $errorResponseArray;
     }
 
-    //Implement loop through array of handles and remove them?
     public function close() {
       curl_multi_close($this->mhandle);
     }
@@ -156,8 +149,7 @@ class CurlMultiHandler extends CurlHandler implements HttpRequest
         
       curl_multi_add_handle($this->mhandle, $ch->handle);
     }
-    
-    //TODO: Implement an optional flag for removing one handle vs all duplicates?
+
     public function removeHandle($ch) {
         
       $index = null;
@@ -165,18 +157,11 @@ class CurlMultiHandler extends CurlHandler implements HttpRequest
       $matches = array_filter($this->handles, function($item) use ($ch) { return $item['handle'] === $ch->handle; });
       if($matches) { $index = array_keys($matches)[0]; }
         
-      //This removes first match
+      //Removes first match
       if($index!==null) { unset($this->handles[$index]); }
-      //TODO: (or not?) else { "error: nothing removed" }
-        
-      //This removes all matches
-      /* foreach($matches as $match => $idx)
-        {
-          unset($this->handles[$match]);
-        }
-      */
-        
+
       curl_multi_remove_handle($this->mhandle, $ch->handle);
     }
 }
+
 ?>
