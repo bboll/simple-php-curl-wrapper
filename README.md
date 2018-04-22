@@ -15,8 +15,7 @@ A simple wrapper for libcurl for URL data transfer (http and https). libcurl is 
   );
   
   $mch = new CurlMultiHandler();
-  $mch->setOptions($options);
-		
+  
   $urlCount = count($urls);
   for($i=0; $i<$urlCount; $i++)
   {
@@ -24,6 +23,7 @@ A simple wrapper for libcurl for URL data transfer (http and https). libcurl is 
 	  $mch->addHandle($ch);
   }
 
+  $mch->setOptions($options);
   $resultArray = $mch->execute();
   $mch->close();
 ```
