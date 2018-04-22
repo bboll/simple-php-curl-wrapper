@@ -31,5 +31,5 @@ A simple wrapper for libcurl for URL data transfer (http and https). libcurl is 
 ### How do I use this?
 Fork this repo or copy CurlHandler.php into your project. Then just add this to use it:
 ```php
-require_once('../CurlHandler.php');
+require_once('CurlHandler.php');
 ```
