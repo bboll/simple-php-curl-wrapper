@@ -33,3 +33,4 @@ Fork this repo or copy CurlHandler.php into your project. Then just add this to 
 ```php
 require_once('CurlHandler.php');
 ```
+Be sure that the curl module is enabled on your PHP install or you have the proper extension installed.
